@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: kitbank_postgres
+    environment:
+      POSTGRES_USER: kitbank
+      POSTGRES_PASSWORD: kitbank_password
+      POSTGRES_DB: kitbank_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U kitbank" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kitbank_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: kitbank_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kitbank_network
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kitbank_backend
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://kitbank:kitbank_password@postgres:5432/kitbank_db
+      - DATABASE_SYNC_URL=postgresql://kitbank:kitbank_password@postgres:5432/kitbank_db
+      - REDIS_URL=redis://redis:6379/0
+      - DEBUG=true
+      - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - kitbank_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+
+networks:
+  kitbank_network:
+    driver: bridge
