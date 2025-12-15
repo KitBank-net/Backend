@@ -65,6 +65,7 @@ async def close_redis():
     global redis_pool
     if redis_pool:
         await redis_pool.close()
+        redis_pool = None
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
