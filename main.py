@@ -9,6 +9,8 @@ from app.modules.transactions.router import router as transactions_router
 from app.modules.loans.router import router as loans_router
 from app.modules.cards.router import router as cards_router
 from app.modules.security.router import router as security_router
+from app.modules.notifications.router import router as notifications_router
+from app.modules.budgeting.router import router as budgeting_router
 
 
 @asynccontextmanager
@@ -51,6 +53,8 @@ app.include_router(transactions_router)
 app.include_router(loans_router)
 app.include_router(cards_router)
 app.include_router(security_router)
+app.include_router(notifications_router)
+app.include_router(budgeting_router)
 
 
 @app.get("/health")
