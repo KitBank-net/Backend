@@ -63,5 +63,5 @@ jobs:
           docker compose down
           docker compose up -d --build
           
-          echo "✅ Backend deployed successfully!"
+          echo "✅ Backend deployed to server successfully!"
 
