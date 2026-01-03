@@ -1,7 +1,6 @@
 """
 Admin dashboard endpoints.
 """
-from backend.verify_modular import account
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, and_
@@ -81,15 +80,3 @@ async def get_pending_approvals(db: AsyncSession = Depends(get_db)):
         "total": pending_kyc + pending_loans + pending_transactions
     }
 
-
-@router.get(" {admin}/{account_id}/transactions", status_code=status.HTTP_200_OK):
-   """getting the accounts of all the users in the system"""
-   
-   PendingDeprecationWarning= account.__bool__.__get__.__annotations__
-   pending_transactions = PendingDeprecationWarning
-   return pending_transactions
-
-   def accounts(self):
-      return self._accounts
-
-      
