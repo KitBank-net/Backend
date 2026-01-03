@@ -50,7 +50,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
   
         script: |
-          cd /opt/apps/backend
+          cd /opt/kitbank/backend
           
           # Clone if first time, otherwise pull latest
           if [ ! -d ".git" ]; then
