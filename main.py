@@ -12,6 +12,7 @@ from app.modules.security.router import router as security_router
 from app.modules.notifications.router import router as notifications_router
 from app.modules.budgeting.router import router as budgeting_router
 from app.modules.admin.router import router as admin_router
+from app.modules.openbanking.router import router as openbanking_router
 
 
 @asynccontextmanager
@@ -57,6 +58,7 @@ app.include_router(security_router)
 app.include_router(notifications_router)
 app.include_router(budgeting_router)
 app.include_router(admin_router)
+app.include_router(openbanking_router)
 
 
 @app.get("/health")
