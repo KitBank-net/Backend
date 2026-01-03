@@ -1,44 +1,132 @@
+# ============================================================
+# KitBank.net Backend - Requirements
+# Python 3.11+
+# ============================================================
+
+# ============================================================
 # Core Framework
+# ============================================================
 fastapi>=0.110.0
 uvicorn[standard]>=0.29.0
 pydantic>=2.7.0
 pydantic-settings>=2.2.0
+starlette>=0.36.0
 
-# Database
+# ============================================================
+# Database - PostgreSQL (Async)
+# ============================================================
 sqlalchemy>=2.0.30
-asyncpg>=0.29.0
-alembic>=1.13.1
-psycopg2-binary>=2.9.9
-greenlet>=3.0.0
+asyncpg>=0.29.0              # Async PostgreSQL driver
+psycopg2-binary>=2.9.9       # Sync PostgreSQL driver (for Alembic)
+alembic>=1.13.1              # Database migrations
+greenlet>=3.0.0              # Required for SQLAlchemy async
 
-# Redis
+# ============================================================
+# Redis - Caching & Sessions
+# ============================================================
 redis>=5.0.1
 
+# ============================================================
 # Authentication & Security
-python-jose[cryptography]>=3.3.0
-passlib[bcrypt]>=1.7.4
-python-multipart>=0.0.9
+# ============================================================
+python-jose[cryptography]>=3.3.0    # JWT tokens
+passlib[bcrypt]>=1.7.4              # Password hashing
+argon2-cffi>=23.1.0                 # Argon2 password hashing (more secure)
+python-multipart>=0.0.9             # Form data parsing
+pyotp>=2.9.0                        # 2FA/TOTP support
+cryptography>=42.0.0                # Encryption utilities
 
-# AWS S3 (Optional)
-boto3>=1.34.34
+# ============================================================
+# AWS Services (Optional)
+# ============================================================
+boto3>=1.34.34                      # AWS SDK (S3, SES, etc.)
 
+# ============================================================
 # Email Service
-sendgrid>=6.11.0
+# ============================================================
+sendgrid>=6.11.0                    # SendGrid email API
 
+# ============================================================
 # SMS Service
-twilio>=8.11.1
+# ============================================================
+twilio>=8.11.1                      # Twilio SMS API
 
-# Utilities
-python-dotenv>=1.0.0
-email-validator>=2.1.0
+# ============================================================
+# QR Code Generation
+# ============================================================
+qrcode[pil]>=7.4.0                  # QR code generation
+Pillow>=10.2.0                      # Image processing for QR
 
+# ============================================================
+# HTTP Client
+# ============================================================
+httpx>=0.27.0                       # Async HTTP client
+aiohttp>=3.9.0                      # Alternative async HTTP
+
+# ============================================================
+# Data Validation & Parsing
+# ============================================================
+python-dotenv>=1.0.0                # .env file support
+email-validator>=2.1.0              # Email validation
+phonenumbers>=8.13.0                # Phone number validation
+python-dateutil>=2.8.2              # Date utilities
+
+# ============================================================
+# JSON & Data Serialization
+# ============================================================
+orjson>=3.9.0                       # Fast JSON parsing
+ujson>=5.9.0                        # Ultra-fast JSON
+
+# ============================================================
+# Background Tasks & Scheduling
+# ============================================================
+celery>=5.3.6                       # Task queue (optional)
+apscheduler>=3.10.4                 # Job scheduling
+
+# ============================================================
+# Logging & Monitoring
+# ============================================================
+structlog>=24.1.0                   # Structured logging
+python-json-logger>=2.0.7           # JSON log formatting
+
+# ============================================================
+# API Documentation
+# ============================================================
+# (Included with FastAPI)
+
+# ============================================================
 # Testing
+# ============================================================
 pytest>=8.0.0
 pytest-asyncio>=0.23.5
-httpx>=0.27.0
-faker>=24.0.0
+pytest-cov>=4.1.0                   # Coverage reports
+httpx>=0.27.0                       # Test client
+faker>=24.0.0                       # Fake data generation
+factory-boy>=3.3.0                  # Test factories
+aiosqlite>=0.19.0                   # Async SQLite for testing
 
-# Development
-black>=24.3.0
-flake8>=7.0.0
-mypy>=1.9.0
+# ============================================================
+# Development Tools
+# ============================================================
+black>=24.3.0                       # Code formatter
+flake8>=7.0.0                       # Linting
+mypy>=1.9.0                         # Type checking
+isort>=5.13.0                       # Import sorting
+pre-commit>=3.6.0                   # Git hooks
+
+# ============================================================
+# Future Phases (Install as needed)
+# ============================================================
+
+# Phase 3: Crypto Wallet
+# web3>=6.0.0                       # Ethereum/Web3
+# python-bitcoinlib>=0.12.0         # Bitcoin
+# eth-account>=0.8.0                # Ethereum accounts
+
+# Phase 4: AI/ML
+# scikit-learn>=1.3.0               # Machine learning
+# pandas>=2.0.0                     # Data manipulation
+# numpy>=1.24.0                     # Numerical computing
+
+# Phase 5: Messaging
+# python-telegram-bot>=20.0         # Telegram bot
